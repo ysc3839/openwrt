@@ -30,6 +30,7 @@ platform_check_image() {
 	awm002-evb|\
 	awm003-evb|\
 	bc2|\
+	bl-r7628ae4|\
 	broadway|\
 	carambola|\
 	cf-wr800n|\

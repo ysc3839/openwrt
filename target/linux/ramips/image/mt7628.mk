@@ -56,3 +56,11 @@ define Device/mac1200r-v2
   SUPPORTED_DEVICES := mac1200rv2
 endef
 TARGET_DEVICES += mac1200r-v2
+
+define Device/bl-r7628ae4
+  DTS := BL-R7628AE4
+  BLOCKSIZE := 64k
+  IMAGE_SIZE := $(ralink_default_fw_size_4M)
+  DEVICE_TITLE := B-Link BL-R7628AE4
+endef
+TARGET_DEVICES += bl-r7628ae4

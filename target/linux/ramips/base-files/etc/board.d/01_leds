@@ -35,6 +35,7 @@ wf-2881)
 	set_wifi_led "$board:amber:wlan"
 	set_usb_led "$board:blue:3g"
 	;;
+bl-r7628ae4|\
 3g-6200nl|\
 wnce2001)
 	set_wifi_led "$board:green:wlan"

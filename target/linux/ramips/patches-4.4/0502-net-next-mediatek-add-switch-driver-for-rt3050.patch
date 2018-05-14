@@ -8,15 +8,15 @@ Switchdev support for this device will follow.
 
 Signed-off-by: John Crispin <blogic@openwrt.org>
 ---
- drivers/net/ethernet/mediatek/esw_rt3050.c |  640 ++++++++++++++++++++++++++++
+ drivers/net/ethernet/mediatek/esw_rt3050.c |  652 +++++++++++++++++++++++++++++
  drivers/net/ethernet/mediatek/esw_rt3050.h |   29 ++
- 2 files changed, 669 insertions(+)
+ 2 files changed, 681 insertions(+)
  create mode 100644 drivers/net/ethernet/mediatek/esw_rt3050.c
  create mode 100644 drivers/net/ethernet/mediatek/esw_rt3050.h
 
 --- /dev/null
 +++ b/drivers/net/ethernet/mediatek/esw_rt3050.c
-@@ -0,0 +1,640 @@
+@@ -0,0 +1,652 @@
 +/*   This program is free software; you can redistribute it and/or modify
 + *   it under the terms of the GNU General Public License as published by
 + *   the Free Software Foundation; version 2 of the License
@@ -472,20 +472,28 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
 +		fe_reset(RT5350_RESET_EPHY);
 +
 +		rt305x_mii_write(esw, 0, 31, 0x2000); /* change G2 page */
-+		rt305x_mii_write(esw, 0, 26, 0x0020);
++		rt305x_mii_write(esw, 0, 26, 0x0000);
 +
 +		for (i = 0; i < 5; i++) {
-+			rt305x_mii_write(esw, i, 31, 0x8000);
++			rt305x_mii_write(esw, i, 31, 0x8000); /* change L0 page */
 +			rt305x_mii_write(esw, i,  0, 0x3100);
++
++			/* disable EEE */
++			rt305x_mii_write(esw, i, 13, 0x7);
++			rt305x_mii_write(esw, i, 14, 0x3c);
++			rt305x_mii_write(esw, i, 13, 0x4007);
++			rt305x_mii_write(esw, i, 14, 0x0);
++
 +			rt305x_mii_write(esw, i, 30, 0xa000);
-+			rt305x_mii_write(esw, i, 31, 0xa000);
++			rt305x_mii_write(esw, i, 31, 0xa000); /* change L2 page */
 +			rt305x_mii_write(esw, i, 16, 0x0606);
 +			rt305x_mii_write(esw, i, 23, 0x0f0e);
 +			rt305x_mii_write(esw, i, 24, 0x1610);
 +			rt305x_mii_write(esw, i, 30, 0x1f15);
 +			rt305x_mii_write(esw, i, 28, 0x6111);
-+			rt305x_mii_write(esw, i, 31, 0x2000);
-+			rt305x_mii_write(esw, i, 26, 0x0000);
++
++			/* rt305x_mii_write(esw, i, 31, 0x2000);
++			rt305x_mii_write(esw, i, 26, 0x0000); */
 +		}
 +
 +		/* 100Base AOI setting */
@@ -502,6 +510,10 @@ Signed-off-by: John Crispin <blogic@openwrt.org>
 +		rt305x_mii_write(esw, 0, 28, 0x0233);
 +		rt305x_mii_write(esw, 0, 29, 0x000a);
 +		rt305x_mii_write(esw, 0, 30, 0x0000);
++		/* Fix EPHY idle state abnormal behavior */
++		rt305x_mii_write(esw, 0, 31, 0x4000); /* change G4 page */
++		rt305x_mii_write(esw, 0, 29, 0x000d);
++		rt305x_mii_write(esw, 0, 30, 0x0500);
 +	} else {
 +		rt305x_mii_write(esw, 0, 31, 0x8000);
 +		for (i = 0; i < 5; i++) {

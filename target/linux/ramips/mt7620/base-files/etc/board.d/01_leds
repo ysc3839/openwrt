@@ -158,6 +158,14 @@ netgear,ex6130)
 	ucidef_set_led_netdev "wlan5g" "ROUTER (green)" "$boardname:green:router" "wlan0"
 	ucidef_set_led_netdev "wlan2g" "DEVICE (green)" "$boardname:green:device" "wlan1"
 	;;
+netgear,ex6100-v1)
+	ucidef_set_rssimon "wlan1" "200000" "1"
+	ucidef_set_led_rssi "routerlinkred" "Router Poor Link" "$boardname:red:router" "wwan" "1" "66"
+	ucidef_set_led_rssi "routerlinkgreen" "Router Best Link" "$boardname:green:router" "wwan" "34" "100"
+	ucidef_set_rssimon "wlan0" "200000" "1"
+	ucidef_set_led_rssi "clientlinkred" "Client Poor Link" "$boardname:red:client" "wlan0" "1" "66"
+	ucidef_set_led_rssi "clientlinkgreen" "Client Best Link" "$boardname:green:client" "wlan0" "34" "100"
+	;;
 phicomm,psg1208)
 	set_wifi_led "$boardname:white:wlan2g"
 	;;

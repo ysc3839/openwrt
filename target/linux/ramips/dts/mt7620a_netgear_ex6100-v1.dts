@@ -1,0 +1,100 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+
+/dts-v1/;
+
+#include "mt7620a_netgear_ex3700_ex6130.dtsi"
+
+/ {
+	compatible = "netgear,ex6100-v1", "ralink,mt7620a-soc";
+	model = "Netgear EX6100 v1";
+
+	aliases {
+		led-boot = &led_power_amber;
+		led-failsafe = &led_power_amber;
+		led-running = &led_power_green;
+		led-upgrade = &led_power_amber;
+		label-mac-device = &ethernet;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		led_power_green: power_green {
+			label = "ex6100-v1:green:power";
+			gpios = <&gpio2 23 GPIO_ACTIVE_LOW>;
+		};
+
+		led_power_amber: power_amber {
+			label = "ex6100-v1:amber:power";
+			gpios = <&gpio2 28 GPIO_ACTIVE_LOW>;
+		};
+
+		router_link_green {
+			label = "ex6100-v1:green:router-link";
+			gpios = <&gpio2 25 GPIO_ACTIVE_LOW>;
+		};
+
+		router_link_red {
+			label = "ex6100-v1:red:router-link";
+			gpios = <&gpio2 24 GPIO_ACTIVE_LOW>;
+		};
+
+		router_arrow {
+			label = "ex6100-v1:blue:router-arrow";
+			gpios = <&gpio2 29 GPIO_ACTIVE_LOW>;
+		};
+
+		client_link_green {
+			label = "ex6100-v1:green:client-link";
+			gpios = <&gpio2 20 GPIO_ACTIVE_LOW>;
+		};
+
+		client_link_red {
+			label = "ex6100-v1:red:client-link";
+			gpios = <&gpio2 21 GPIO_ACTIVE_LOW>;
+		};
+
+		client_arrow {
+			label = "ex6100-v1:blue:client-arrow";
+			gpios = <&gpio2 22 GPIO_ACTIVE_LOW>;
+		};
+
+		wps {
+			label = "ex6100-v1:green:wps";
+			gpios = <&gpio2 27 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&keys {
+	mode {
+		label = "mode";
+		linux,code = <BTN_0>;
+		linux,input-type = <EV_SW>;
+		gpios = <&gpio2 30 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&ethernet {
+	pinctrl-names = "default";
+	pinctrl-0 = <&rgmii1_pins &mdio_pins>;
+
+	port@5 {
+		status = "okay";
+		phy-handle = <&phy5>;
+		phy-mode = "rgmii";
+	};
+
+	mdio-bus {
+		status = "okay";
+
+		phy5: ethernet-phy@5 {
+			reg = <5>;
+			phy-mode = "rgmii";
+		};
+	};
+};
+
+&gsw {
+	mediatek,port5 = "gmac";
+};

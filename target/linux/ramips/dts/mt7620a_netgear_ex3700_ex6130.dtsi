@@ -8,7 +8,7 @@
 		bootargs = "console=ttyS0,57600";
 	};
 
-	keys {
+	keys: keys {
 		compatible = "gpio-keys";
 
 		reset {

@@ -629,6 +629,20 @@ define Device/netgear_ex3700
 endef
 TARGET_DEVICES += netgear_ex3700
 
+define Device/netgear_ex6100-v1
+  SOC := mt7620a
+  NETGEAR_BOARD_ID := U12H248T00_NETGEAR
+  BLOCKSIZE := 4k
+  IMAGES += factory.chk
+  IMAGE/factory.chk := $$(sysupgrade_bin) | check-size 7744k | \
+	netgear-chk
+  DEVICE_PACKAGES := kmod-mt76x0e rssileds
+  DEVICE_VENDOR := NETGEAR
+  DEVICE_MODEL := EX6100
+  DEVICE_VARIANT := v1
+endef
+TARGET_DEVICES += netgear_ex6100-v1
+
 define Device/netgear_ex6130
   SOC := mt7620a
   NETGEAR_BOARD_ID := U12H319T50_NETGEAR
